@@ -3,6 +3,11 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_image.h>
 
+#define WINDOW_HEIGHT (720)
+#define WINDOW_WIDTH (1280)
+
+#define SCROLL_SPEED (300)
+
 int main(int argc, char *argv[])
 {
     if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) != 0)
@@ -11,7 +16,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    SDL_Window* win = SDL_CreateWindow("Sorcerer Tower Defense", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
+    SDL_Window* win = SDL_CreateWindow("Sorcerer Tower Defense", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
     if (!win)
     {
@@ -51,12 +56,21 @@ int main(int argc, char *argv[])
     }
 
     SDL_RenderClear(rend);
-
     SDL_RenderCopy(rend, tex, NULL, NULL);
-
     SDL_RenderPresent(rend);
 
-    SDL_Delay(5000);
+    int close_requested = 0;
+    while(!close_requested)
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
+                close_requested = 1;
+            }
+        }
+    }
 
     SDL_DestroyTexture(tex);
     SDL_DestroyRenderer(rend);
