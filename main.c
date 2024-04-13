@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_image.h>
+#include <math.h>
 
 #define WINDOW_HEIGHT (720)
 #define WINDOW_WIDTH (1280)
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
         SDL_Quit();
     }
 
-    SDL_Surface* surface = IMG_Load("src\\assets\\Main_Menu.gif");
+    SDL_Surface* surface = IMG_Load("src\\assets\\Main_Menu_Background.jpg");
     if (!surface)
     {
         printf("error creating surface: %s\n", SDL_GetError());
@@ -71,6 +72,9 @@ int main(int argc, char *argv[])
             }
         }
     }
+
+    int mouse_x, mouse_y;
+    int buttons =SDL_GetMouseState(&mouse_x, &mouse_y);
 
     SDL_DestroyTexture(tex);
     SDL_DestroyRenderer(rend);
