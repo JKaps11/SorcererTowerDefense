@@ -2,12 +2,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_image.h>
+#include "libs/mouse.h"
 #include <math.h>
 
 #define WINDOW_HEIGHT (720)
 #define WINDOW_WIDTH (1280)
-
-#define SCROLL_SPEED (300)
 
 int main(int argc, char *argv[])
 {
@@ -56,13 +55,19 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    Mouse mouse = initializeMouse(rend);
+    
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, tex, NULL, NULL);
+    drawMouse(rend, &mouse);
     SDL_RenderPresent(rend);
+
 
     int close_requested = 0;
     while(!close_requested)
     {
+        updateMouse(&mouse);
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
