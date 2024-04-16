@@ -1,7 +1,7 @@
-#include "libs/mouse.h"
+#include <libs/mouse.h>
 #include <SDL2/SDL.h>
 
-struct Mouse initializeMouse(SDL_Renderer* ren) {
+struct Mouse initialize_mouse(SDL_Renderer* ren) {
     Mouse mouse;
     mouse.tex = IMG_LoadTexture(ren, "src//assets//cursor.png");
     mouse.rect.w = 25;
@@ -12,12 +12,12 @@ struct Mouse initializeMouse(SDL_Renderer* ren) {
     return mouse;   
 };
 
-void updateMouse(Mouse* mouse){
-    SDL_GetMouseState(mouse->rect.x, mouse->rect.y);
+void update_mouse(Mouse* mouse){
+    SDL_GetMouseState(&mouse->rect.x, &mouse->rect.y);
     mouse->point.x = mouse->rect.x;
     mouse->point.y = mouse->rect.y;
 };
 
-void drawMouse(SDL_Renderer* ren, Mouse* mouse){
+void draw_mouse(SDL_Renderer* ren, Mouse* mouse){
     SDL_RenderCopy(ren, mouse->tex, NULL, &mouse->rect);
 };
