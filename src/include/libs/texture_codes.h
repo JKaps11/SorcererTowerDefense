@@ -1,0 +1,6 @@
+#ifndef TEXTURE_CODES_H
+#define TEXTURE_CODES_H
+
+#define BACKROUND_PICTURE (0)
+
+#endif /* TEXTURE_CODES_H */

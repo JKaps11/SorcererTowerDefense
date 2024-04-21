@@ -1,40 +1,23 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_image.h>
-#include "libs/mouse.h"
-#include "libs/initialize.h"
-#include <math.h>
-
+#include "libs/game.h"
 
 int main(int argc, char *argv[])
 {
-    Game game = setup_game();
+    GHandle* game = game_setup();
 
-    Mouse mouse = initialize_mouse(game.rend);
-
-    SDL_RenderClear(game.rend);
-    SDL_RenderCopy(game.rend, game.texs[0], NULL, NULL);
-    draw_mouse(game.rend, &mouse);
-    SDL_RenderPresent(game.rend);
-
+    game_main_menu_draw(&game);
+    game_mouse_draw(&game);
+    game_render(&game);
 
     int close_requested = 0;
     while(!close_requested)
     {
-        update_mouse(&mouse);
-
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
-                close_requested = 1;
-            }
-        }
+       game_mouse_update(&game);
+       close_requested = game_state_update(&game);
     }
 
-    clean_game(&game);    
+    game_clean(&game);    
     SDL_Quit();
 
     return 0;
