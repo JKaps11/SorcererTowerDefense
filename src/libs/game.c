@@ -59,8 +59,14 @@ uint8_t image_texture_create(Game* game, char image_path[])
 }
 
 void game_main_menu_draw(void* game){
-    SDL_RenderClear(((Game*)game)->rend);
-    SDL_RenderCopy(((Game*)game)->rend, ((Game*)game)->texs[BACKROUND_PICTURE], NULL, NULL);
+    Game* gamePtr = (Game*)game;
+    // setting up backround image
+    image_texture_create(gamePtr,"src\\assets\\Main_Menu_Background.jpg");
+
+    if(SDL_RenderCopy(gamePtr->rend, gamePtr->texs[BACKROUND_PICTURE], NULL, NULL) != 0)
+    {
+        printf("Error rendering main menu: %s", SDL_GetError());
+    }
 }
 
 void game_render(void* game){
@@ -89,17 +95,21 @@ void *game_setup(void)
     // add extra space for 4 aditional textures
     Game* game = malloc(sizeof (Game) + sizeof(SDL_Texture*) * 4);
 
+    if (game == NULL) {
+        // Handle allocation failure (e.g., return NULL)
+        printf("Error allocating memory for game\n");
+        return NULL;
+    }
+
     assert(SDL_initialize() == TRUE);
 
     game->win = window_initialize();
     game->rend = renderer_initialize(game->win);
+    SDL_RenderClear(game->rend);
     game->num_textures = 0;
     game->max_num_textures = 5;
 
     game->mouse = mouse_create(game->rend);
-
-    // setting up backround image
-    image_texture_create(game,"src\\assets\\Main_Menu_Background.jpg");
 
     return (void*)game;
 }

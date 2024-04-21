@@ -7,7 +7,7 @@
 
 uint8_t SDL_initialize(void) 
 {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER) != 0)
     {
         printf("error  initializing SDL: %s\n", SDL_GetError());
         return FALSE;

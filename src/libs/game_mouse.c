@@ -22,7 +22,6 @@ void mouse_update(Game* game){
 };
 
 void mouse_draw(Game* game){
-    SDL_RenderClear(((Game*)game)->rend);
     SDL_RenderCopy(game->rend, game->mouse->tex, NULL, &(game->mouse->rect));
 };
 
