@@ -8,7 +8,6 @@
 #include "libs/constants.h"
 #include "libs/game_internal.h"
 #include "libs/game.h"
-#include "libs/game_mouse.h"
 #include "libs/initialize.h"
 #include "libs/texture_codes.h"
 
@@ -108,8 +107,6 @@ void *game_setup(void)
     SDL_RenderClear(game->rend);
     game->num_textures = 0;
     game->max_num_textures = 5;
-
-    game->mouse = mouse_create(game->rend);
-
+    game_mouse_initialize(game);
     return (void*)game;
 }
